@@ -12,7 +12,7 @@ declare global {
 }
 
 export function loadAdsScript() {
-  if (!ADSENSE_CLIENT || document.getElementById("adsbygoogle-js")) return;
+  if (!ADSENSE_CLIENT || document.getElementById("adsbygoogle-js") || document.querySelector("script[src*=\"adsbygoogle.js\"]")) return;
   const s = document.createElement("script");
   s.id = "adsbygoogle-js";
   s.async = true;

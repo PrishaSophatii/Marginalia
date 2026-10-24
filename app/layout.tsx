@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { SITE } from "@/lib/site";
+import { ADSENSE_CLIENT } from "@/lib/ads";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: SITE.name, description: SITE.description },
   alternates: { canonical: "/" },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : undefined,
+  // Lets AdSense confirm the site belongs to your account during review.
+  other: process.env.NEXT_PUBLIC_ADSENSE_CLIENT ? { "google-adsense-account": process.env.NEXT_PUBLIC_ADSENSE_CLIENT } : undefined,
   robots: { index: true, follow: true },
 };
 
@@ -29,6 +32,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {ADSENSE_CLIENT && (
+          <script async crossOrigin="anonymous" src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`} />
+        )}
+      </head>
       <body>{children}</body>
     </html>
   );
